@@ -1,82 +1,121 @@
-# Lightweight React Template for KAVIA
+# Tic Tac Toe Frontend (React)
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+This repository contains a React frontend intended to host a browser-based Tic Tac Toe game with a 3x3 grid, two-player (X/O) turn-based gameplay, and endgame detection (win or draw).
 
-## Features
+At the moment, the checked-in UI is a lightweight React template that demonstrates theming (light/dark toggle). The sections below describe the intended Tic Tac Toe behavior for this project and how to run and configure the frontend.
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+## Project overview
 
-## Getting Started
+The intended application is a simple Tic Tac Toe game playable in the browser:
 
-In the project directory, you can run:
+A player clicks an empty square to place their mark (X then O alternating). After each move, the game detects whether a player has won (three in a row horizontally, vertically, or diagonally) or whether the game is a draw (all squares filled with no winner).
+
+## Tech stack
+
+The frontend is built with React (Create React App via `react-scripts`).
+
+## Getting started
+
+### Prerequisites
+
+You need Node.js and npm.
+
+### Install dependencies
+
+From the frontend directory:
+
+```bash
+cd tic_tac_toe_frontend
+npm install
+```
+
+### Run the development server (port 3000)
+
+```bash
+npm start
+```
+
+By default, Create React App serves the app on http://localhost:3000. In this project, the preview system also exposes the frontend on port 3000.
+
+### Build for production
+
+```bash
+npm run build
+```
+
+This creates an optimized production build in the `build/` folder.
+
+## Available scripts
+
+The following scripts are defined in `package.json`:
 
 ### `npm start`
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Runs the app in development mode via `react-scripts start` (typically on port 3000).
 
 ### `npm test`
 
-Launches the test runner in interactive watch mode.
+Runs the test runner via `react-scripts test`.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the app for production via `react-scripts build` into the `build/` directory.
 
-## Customization
+### `npm run eject`
 
-### Colors
+Ejects the Create React App configuration (one-way operation).
 
-The main brand colors are defined as CSS variables in `src/App.css`:
+## Environment variables
 
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
+This frontend uses Create React App conventions: only variables prefixed with `REACT_APP_` are exposed to the browser build.
 
-### Components
+The following variables are currently defined in `tic_tac_toe_frontend/.env`:
 
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
+- `REACT_APP_API_BASE`: Base URL for API requests. Typically the backend HTTP origin.
+- `REACT_APP_BACKEND_URL`: Backend base URL (often the same as `REACT_APP_API_BASE`).
+- `REACT_APP_FRONTEND_URL`: Public URL where the frontend is served (useful for links, redirects, and absolute URL construction).
+- `REACT_APP_WS_URL`: WebSocket endpoint URL (for example, `ws://.../ws`) if the frontend uses WebSockets.
+- `REACT_APP_NODE_ENV`: Environment label used by the app (for example, `development`).
+- `REACT_APP_NEXT_TELEMETRY_DISABLED`: Telemetry disable flag (commonly set to `1` to disable telemetry in some toolchains).
+- `REACT_APP_ENABLE_SOURCE_MAPS`: Whether source maps should be enabled in builds (commonly `true`/`false`).
+- `REACT_APP_PORT`: The port the frontend expects to run on (this project uses `3000`).
+- `REACT_APP_TRUST_PROXY`: Whether the app should trust proxy headers when deployed behind a proxy (commonly `true`/`false`).
+- `REACT_APP_LOG_LEVEL`: Logging verbosity level (for example, `info`).
+- `REACT_APP_HEALTHCHECK_PATH`: Healthcheck endpoint path (for example, `/healthz`) if used by tooling or monitoring.
+- `REACT_APP_FEATURE_FLAGS`: Feature flags configuration payload (currently set to `{}` in `.env`).
+- `REACT_APP_EXPERIMENTS_ENABLED`: Toggle for experimental features (commonly `true`/`false`).
 
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
+If you change `.env`, restart `npm start` so the development server picks up updated environment variables.
 
-## Learn More
+## How to play
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+When the Tic Tac Toe gameplay UI is present:
 
-### Code Splitting
+You play by clicking on an empty square in the 3x3 grid. Players alternate turns placing X and O. The status display indicates whose turn it is, and the game ends immediately when a player achieves three in a row or when all squares are filled (draw). Use the Reset/New Game button (if present) to start a new match.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Preview environment note (important)
 
-### Analyzing the Bundle Size
+This project is run through an automated preview system that serves the frontend on port 3000. Use the provided preview URL to view the app. Do not manually start or manage preview services outside the expected workflow; `npm start` is intended for local development only.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Styling and theme notes
 
-### Making a Progressive Web App
+The target visual style is a minimalist "Pure White" theme with:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- A clean white surface/background.
+- Primary accent: `#374151`.
+- Success/accent (for highlights such as winning states): `#10B981`.
 
-### Advanced Configuration
+The current CSS includes theme variables in `src/App.css` and a light/dark theme toggle. When implementing the Tic Tac Toe board UI, keep the layout centered with a status display above and a reset button below, and apply the Pure White palette (using `#374151` and `#10B981` as the primary accents).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Learn more
 
-### Deployment
+To learn more about React, see the official documentation: https://reactjs.org/.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Create React App documentation (useful troubleshooting and production guidance):
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Code Splitting: https://facebook.github.io/create-react-app/docs/code-splitting
+- Analyzing Bundle Size: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+- Progressive Web App: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+- Advanced Configuration: https://facebook.github.io/create-react-app/docs/advanced-configuration
+- Deployment: https://facebook.github.io/create-react-app/docs/deployment
+- Build minification troubleshooting: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
